@@ -14,6 +14,10 @@ while (1)
     % Test the sufficient descent condition (sdc) at p
 
     sdc = true;     
+
+    d = p - x;
+    gtest = 0.5 * norm(d)^2 \ alpha;
+    
     for i = 1:m
 
         [g] = evalg(n,p,i);
@@ -21,7 +25,7 @@ while (1)
 
         Gend(i) = g;
 
-        if ( g > g0(i) + dot( JG(i,:), p - x ) + 0.5 * norm(p - x)^2 \ alpha )
+        if ( g > g0(i) + dot( JG(i,:), d ) + gtest )
             sdc = false;
             ind = i;
             break
@@ -52,7 +56,7 @@ while (1)
     
     alpha = alphamult * alpha;
     
-    [theta,tau,p,flagIS] = subproblemProxGrad(n,m,l,u,x,alpha,JG,H,dimA,A,b);
+    [~,~,p,flagIS] = subproblemProxGrad(n,m,l,u,x,alpha,JG,H,dimA,A,b);
     
     
     % Check for an error while solving the subproblem

@@ -97,20 +97,16 @@ while(1)
         return
     end 
 
-    % Compute norm(x-xprev,inf)/max(1,norm(xprev,inf)
-
-    if ( iter > 0 ) supnormxxprev = norm(x-xprev,inf)/max(1,norm(xprev,inf));, end
-
     % Print information
 
     if ( mod(iter,10) == 0 )
         fprintf('\n')
-        fprintf('%-5s   %-9s  %-8s       %-8s   %-8s %-8s %-8s \n','it','|x-xprev|','|theta|','fun1','fun2','IS','LS')
+        fprintf('%-5s   %-8s       %-8s   %-8s %-8s %-8s \n','it','|x-xprev|/|xprev|','|theta|','fun1','fun2','IS','LS')
     end
     if ( iter == 0 )
-        fprintf('%5d       %-4s   %8.2e    %+8.2e   %+8.2e   %-8i %-8s\n',iter,'-',abs(theta),F(1),F(2),flagIS,'-')
+        fprintf('%5d   %8.2e    %+8.2e   %+8.2e   %-8i %-8s\n',iter,abs(theta),F(1),F(2),flagIS,'-')
     else
-        fprintf('%5d    %8.2e  %8.2e    %+8.2e   %+8.2e   %-8i %-8i\n',iter,supnormxxprev,abs(theta),F(1),F(2),flagIS,flagLS)
+        fprintf('%5d   %8.2e    %+8.2e   %+8.2e   %-8i %-8i\n',iter,abs(theta),F(1),F(2),flagIS,flagLS)
     end
     
     % -----------
@@ -119,7 +115,7 @@ while(1)
 
     % Test optimality 
    
-    if ( iter > 0  && supnormxxprev <= tol )
+    if ( iter > 0  && norm(x-xprev,inf)/max(1,norm(xprev,inf)) <= tol )
         
         info = 0;
         

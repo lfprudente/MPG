@@ -247,8 +247,8 @@ global problem
 		
 		% Box constraints
 	
-		l(1:n,1) = - 9.0d0;;
-		u(1:n,1) =   9.0d0
+		l(1:n,1) = - 9.0d0;
+		u(1:n,1) =   9.0d0;
 		
 		% Initial point
 		
@@ -509,7 +509,7 @@ global problem
 	
 		% Number of variables
 		
-		n = 5;
+		n = 3;
 		
 		% Number of objectives
 		
@@ -1119,7 +1119,7 @@ global problem
 	
 		% Number of variables
 
-		n = 10;
+		n = 3;
 		
 		% Number of objectives (m>=n)
 		

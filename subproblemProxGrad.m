@@ -41,12 +41,24 @@ ub = [ inf; u; inf(sdimA,1)  ];
 options.Display = 'off';
 options.OptimalityTolerance = 1e-10;
 
-[xopt, fmin, info] = quadprog(Hess, c, Asubprob, bsubprob, Aeqsubprob, beqsubprob,lb, ub, [0; x],options);
+try
+    [xopt, fmin, info] = quadprog(Hess, c, Asubprob, bsubprob, Aeqsubprob, beqsubprob,lb, ub, [0; x],options);
 
-if ( info == 1 )
-    flag = 0;
+    if ( info == 1 )
+        flag = 0;
+    end
+    
+    p = xopt(2:n+1);
+    tau   = xopt(1);
+    theta = xopt(1) + 0.5 * norm( p - x )^2 / alpha;
+
+catch exception
+
+    flag = -1;
+
+    theta = NaN;
+    tau = NaN;
+    p = NaN;
+
 end
 
-p = xopt(2:n+1);
-tau   = xopt(1);
-theta = xopt(1) + 0.5 * norm( p - x )^2 / alpha;
